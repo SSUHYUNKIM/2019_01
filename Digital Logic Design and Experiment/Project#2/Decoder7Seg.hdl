@@ -1,0 +1,57 @@
+// Modified by Minho Kim (15 Oct 2014)
+
+/** 
+ * Decoder7Seg.
+ */
+
+CHIP Decoder7Seg {
+    IN in[4];
+    OUT out[7];
+
+    PARTS:
+    // Put your code here:
+	// Use the following pins (w, notw, x, notx, y, noty, z, notz) for easier implementation
+	Not(in=in[3],out=notw);	// NOT(w)
+	Not(in=notw,out=w);		// w (==out[3])
+	Not(in=in[2],out=notx);	// NOT(x)
+	Not(in=notx,out=x);		// x (==out[2])
+	Not(in=in[1],out=noty);	// NOT(y)
+	Not(in=noty,out=y);		// y (==out[1])
+	Not(in=in[0],out=notz);	// NOT(z)
+	Not(in=notz,out=z);		// z (==out[0])
+Or(a=w, b=y, out=out1);
+And(a=x, b=z, out=out2);
+And(a=notx, b=notz, out=out3);
+Or(a=out1, b=out2, out=out4);
+Or(a=out4, b=out3, out=out[0]);
+And(a=noty, b=notz, out=out5);
+And(a=y, b=z, out=out6);
+Or(a=notx, b=out5, out=out7);
+Or(a=out6, b=out7, out=out[1]);
+Or(a=x, b=noty, out=out8);
+Or(a=out8, b=z, out=out[2]);
+And(a=notx, b=notz, out=out9);
+And(a=y, b=notz, out=out10);
+And(a=x, b=noty, out=out11);
+And(a=out11, b=z, out=out12);
+And(a=notx, b=y, out=out13);
+Or(a=out9, b=out10, out=out14);
+Or(a=out12, b=out13, out=out15);
+Or(a=out14, b=out15, out=out16);
+Or(a=out16, b=w, out=out[3]);
+And(a=notx, b=notz, out=out17);
+And(a=y, b=notz, out=out18);
+Or(a=out17, b=out18, out=out[4]);
+And(a=noty, b=notz, out=out19);
+And(a=x, b=noty, out=out20);
+And(a=x, b=notz, out=out21);
+Or(a=w, b=out19, out=out22);
+Or(a=out20, b=out21, out=out23);
+Or(a=out22, b=out23, out=out[5]);
+And(a=x, b=noty, out=out24);
+And(a=notx, b=noty, out=out25);
+And(a=y, b=notz, out=out26);
+Or(a=w, b=out24, out=out27);
+Or(a=out25, b=out26, out=out28);
+Or(a=out27, b=out28, out=out[6]);
+}
